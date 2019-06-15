@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dark-theme.css">
+
+  <title>gogame</title>
+</head>
+
+<body class="dark-theme">
+  <div class="container">
+    <table class="resourcesTable" style="margin-left:auto;margin-right:auto;">
+      <thead>
+        <tr>
+          <th scope="col">
+            <img src="images/metal.png">
+            <br>
+            Metal
+          </th>
+          <th scope="col">
+            <img src="images/crystal.png">
+            <br>
+            Crystal
+          </th>
+          <th scope="col">
+            <img src="images/deuterium.png">
+            <br>
+            Detuerium
+          </th>
+          <th scope="col">
+            <img src="images/energy.png">
+            <br>
+            Energy
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="metal"></td>
+          <td id="crystal"></td>
+          <td id="deuterium"></td>
+          <td id="energy"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="col-sm-2">
+        <br><br><br><br><br>
+        <a href="dashboard.html">Dashboard</a><br>
+        <a href="buildings.html">Buildings</a>
+
+        <br><br><br><br><br>
+        <div onclick="logout()" class="btn btn-primary">Logout</div>
+      </div>
+      <div class="col-sm-10">
+        User Name: <span id="name"></span>
+        <br>
+        Planet Name: <span id="planetname"></span>
+
+        <table>
+          <tbody>
+            <tr>
+              <th>Fields</th>
+              <th>
+                <!-- <font color="#00FF00">75</font> / <font color="#FF0000">250</font> - still 175 Free fields for construction -->
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <img src="images/buildings/metalmine.png" width="120" height="120" border="0" align="top">
+              </td>
+              <td>
+                <a href="#">Metal Mine</a> <span id="metalmineLevel">(Level 0)</span><br>
+                Used in the extraction of metal ore, metal mines are of primary importance to all emerging and established empires.<br>
+                <div id="metalmineResources"></div>
+                Construction Time: 00h 00m 00s
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildMetalMine">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=2">
+                  <img src="images/buildings/crystalmine.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=2">Crystal Mine</a> <span id="crystalmineLevel">(Level 0)</span><br>
+                Crystals are the main resource used to build electronic circuits and form certain alloy compounds.<br>
+                <div id="crystalmineResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildCrystalMine">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=3">
+                  <img src="images/buildings/deuteriummine.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=3">Deuterium Synthesizer</a> <span id="deuteriummineLevel">(Level 0)</span><br>
+                Deuterium is used as fuel for spaceships and is harvested in the deep sea. Deuterium is a rare substance and is thus relatively expensive.<br>
+                <div id="deuteriummineResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildDeuteriumMine">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=4">
+                  <img src="images/buildings/solarmine.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=4">Solar Plant</a> <span id="energymineLevel">(Level 0)</span><br>
+                Solar power plants absorb energy from solar radiation. All mines need energy to operate.<br>
+                <div id="energymineResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildEnergyMine">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=12">
+                  <img src="images/buildings/fusionreactor.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=12">Fusion Reactor</a> <span id="fusionreactorLevel">(Level 0)</span><br>
+                The fusion reactor uses deuterium to produce energy.<br>
+                <div id="fusionreactorResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildFusionReactor">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=14">
+                  <img src="images/buildings/roboticsfactory.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=14">Robotics Factory</a> <span id="roboticsfactoryLevel">(Level 0)</span><br>
+                Robotic factories provide construction robots to aid in the construction of buildings. Each level increases the speed of the upgrade of buildings.<br>
+                <div id="roboticsfactoryResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildRoboticsFactory">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=21">
+                  <img src="images/buildings/shipyard.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=21">Shipyard</a> <span id="shipyardLevel">(Level 0)</span><br>
+                All types of ships and defensive facilities are built in the planetary shipyard.<br>
+                <div id="shipyardResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildShipyard">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=22">
+                  <img src="images/buildings/metalstorage.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=22">Metal Storage</a> <span id="metalstorageLevel">(Level 0)</span><br>
+                Provides storage for excess metal.<br>
+                <div id="metalstorageResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildMetalStorage">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=23">
+                  <img src="images/buildings/crystalstorage.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=23">Crystal Storage</a> <span id="crystalstorageLevel">(Level 0)</span><br>
+                Provides storage for excess crystal.<br>
+                <div id="crystalstorageResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildCrystalStorage">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=24">
+                  <img src="images/buildings/deuteriumstorage.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=24">Deuterium Tank</a> <span id="deuteriumstorageLevel">(Level 0)</span><br>
+                Giant tanks for storing newly-extracted deuterium.<br>
+                <div id="deuteriumstorageResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildDeuteriumStorage">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=31">
+                  <img src="images/buildings/ressearchlab.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=31">Research Lab</a> <span id="ressearchlabLevel">(Level 0)</span><br>
+                A research lab is required in order to conduct research into new technologies.<br>
+                <div id="ressearchlabResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildRessearchLab">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=34">
+                  <img src="images/buildings/alliancedepot.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=34">Alliance Depot</a> <span id="alliancedepotLevel">(Level 0)</span><br>
+                The alliance depot supplies fuel to friendly fleets in orbit helping with defense.<br>
+                <div id="alliancedepotResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildAllianceDepot">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=44">
+                  <img src="images/buildings/missilesilo.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=44">Missile Silo</a> <span id="missilesiloLevel">(Level 0)</span><br>
+                Perfect to store missiles<br>
+                <div id="missilesiloResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildMissileSilo">
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="infos.php?gid=80">
+                  <img src="images/buildings/spacedock.png" width="120" height="120" border="0" align="top">
+                </a>
+              </td>
+              <td>
+                <a href="infos.php?gid=80">Spacedock</a> <span id="spacedockLevel">(Level 0)</span><br>
+                The space dock offers the possibility to repair destroyed ships that have left a wreckage field as a result of a battle. The maximum repair time is 12 hours, but it takes at least 30 minutes until the ships can be put into service.
+                <br>From
+                the formation of the wreck field there are 3 days time to start the repair. The repaired ships must be actively put back into service after the repair has expired. If this does not happen, they automatically return to service after 3
+                days. <br>Since the space dock floats in orbit, it does not require planetary fields.
+                <div id="spacedockResources"></div>
+                <br>
+              </td>
+              <td>
+                <div id="btnBuildSpacedock">
+
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+  <script src="constants.js"></script>
+  <script src="calc.js"></script>
+  <script src="user.js"></script>
+  <script src="buildings.js"></script>
+
+</body>
+
+</html>
