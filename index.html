@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dark-theme.css">
+
+  <title>gogame</title>
+</head>
+
+<body class="dark-theme">
+  <div class="container">
+    <div class="row" style="margin-top:20%;">
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4">
+
+          <h3>gogame</h3>
+        <div class="card">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+            </li>
+          </ul>
+
+          <div class="card-body">
+
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                <h5 class="card-title">Login</h5>
+                <hr>
+                <p class="card-text">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input type="email" class="form-control" id="loginEmail" placeholder="Enter email">
+                  <br>
+                  <label for="exampleInputPassword1">Password</label>
+                  <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                  <div onclick="login()" class="btn btn-primary float-right">Login</div>
+                </p>
+              </div>
+              <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                <h5 class="card-title">Register</h5>
+                <hr>
+                <p class="card-text">
+                  <label for="email">Email address</label>
+                  <input type="email" class="form-control" id="registerEmail" placeholder="Enter email">
+                  <br>
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="registerName" placeholder="Name">
+                  <br>
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="registerPassword" placeholder="Password">
+                  <div onclick="register()" class="btn btn-primary float-right">Register</div>
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+  <script src="constants.js"></script>
+  <script src="index.js"></script>
+
+</body>
+</html>
