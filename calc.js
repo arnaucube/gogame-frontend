@@ -7,10 +7,10 @@ function metalmineCost(lvl) {
 	};
   // cost = base * 1.5^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 1.5**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 1.5**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 1.5**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 1.5**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 1.5**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 1.5**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 1.5**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 1.5**(lvl-1));
   return cost;
 }
 function crystalmineCost(lvl) {
@@ -22,10 +22,10 @@ function crystalmineCost(lvl) {
 	};
 	// cost = base * 1.6^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 1.6**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 1.6**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 1.6**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 1.6**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 1.6**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 1.6**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 1.6**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 1.6**(lvl-1));
   return cost;
 }
 function deuteriummineCost(lvl) {
@@ -37,10 +37,10 @@ function deuteriummineCost(lvl) {
 	};
   // cost = base * 1.5^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 1.5**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 1.5**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 1.5**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 1.5**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 1.5**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 1.5**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 1.5**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 1.5**(lvl-1));
   return cost;
 }
 function energymineCost(lvl) {
@@ -52,10 +52,10 @@ function energymineCost(lvl) {
 	};
   // cost = base * 1.5^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 1.5**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 1.5**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 1.5**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 1.5**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 1.5**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 1.5**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 1.5**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 1.5**(lvl-1));
   return cost;
 }
 function fusionreactorCost(lvl) {
@@ -67,10 +67,10 @@ function fusionreactorCost(lvl) {
 	};
   // cost = base * 1.8^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 1.8**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 1.8**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 1.8**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 1.8**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 1.8**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 1.8**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 1.8**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 1.8**(lvl-1));
   return cost;
 }
 function roboticsfactoryCost(lvl) {
@@ -82,10 +82,10 @@ function roboticsfactoryCost(lvl) {
 	};
   // cost = base * 2^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 2**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 2**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 2**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 2**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 2**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 2**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 2**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 2**(lvl-1));
   return cost;
 }
 function shipyardCost(lvl) {
@@ -97,10 +97,10 @@ function shipyardCost(lvl) {
 	};
   // cost = base * 2^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 2**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 2**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 2**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 2**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 2**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 2**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 2**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 2**(lvl-1));
   return cost;
 }
 function metalstorageCost(lvl) {
@@ -112,7 +112,7 @@ function metalstorageCost(lvl) {
 	};
   // cost = base * 2^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 2**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 2**(lvl-1));
   cost.Crystal = 0;
   cost.Deuterium = 0;
   cost.Energy = 0;
@@ -127,10 +127,10 @@ function crystalstorageCost(lvl) {
 	};
   // cost = base * 2^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 2**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 2**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 2**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 2**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 2**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 2**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 2**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 2**(lvl-1));
   return cost;
 }
 function deuteriumstorageCost(lvl) {
@@ -142,10 +142,10 @@ function deuteriumstorageCost(lvl) {
 	};
   // cost = base * 2^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 2**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 2**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 2**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 2**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 2**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 2**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 2**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 2**(lvl-1));
   return cost;
 }
 function ressearchlabCost(lvl) {
@@ -157,10 +157,10 @@ function ressearchlabCost(lvl) {
 	};
   // cost = base * 1.5^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 1.5**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 1.5**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 1.5**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 1.5**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 1.5**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 1.5**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 1.5**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 1.5**(lvl-1));
   return cost;
 }
 
@@ -173,10 +173,10 @@ function alliancedepotCost(lvl) {
 	};
   // cost = base * 2^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 2**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 2**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 2**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 2**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 2**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 2**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 2**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 2**(lvl-1));
   return cost;
 }
 function missilesiloCost(lvl) {
@@ -188,10 +188,10 @@ function missilesiloCost(lvl) {
 	};
   // cost = base * 2^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 2**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 2**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 2**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 2**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 2**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 2**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 2**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 2**(lvl-1));
   return cost;
 }
 function spacedockCost(lvl) {
@@ -203,9 +203,9 @@ function spacedockCost(lvl) {
 	};
   // cost = base * 2^(lvl-1)
   let cost = {};
-  cost.Metal = Math.round(base.Metal * 2**(lvl-1));
-  cost.Crystal = Math.round(base.Crystal * 2**(lvl-1));
-  cost.Deuterium = Math.round(base.Deuterium * 2**(lvl-1));
-  cost.Energy = Math.round(base.Energy * 2**(lvl-1));
+  cost.Metal = Math.floor(base.Metal * 2**(lvl-1));
+  cost.Crystal = Math.floor(base.Crystal * 2**(lvl-1));
+  cost.Deuterium = Math.floor(base.Deuterium * 2**(lvl-1));
+  cost.Energy = Math.floor(base.Energy * 2**(lvl-1));
   return cost;
 }
