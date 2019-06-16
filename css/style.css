@@ -30,3 +30,14 @@ hr {
 	text-align: center;
 	border:1px solid #ffffff;
 }
+
+.allowed {
+	color: lime;
+	cursor: pointer;
+}
+.allowed:hover {
+	text-decoration: underline;
+}
+.notallowed {
+	color: red;
+}

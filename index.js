@@ -16,9 +16,24 @@ function register() {
   axios.post(url + "/register", data)
     .then(function (res) {
     console.log(res.data);
+      document.getElementById("register").innerHTML = `
+	<br><br>
+	<div class="alert alert-success" role="alert">
+	  Registration complete. You can now Login
+	</div>
+	<br><br>
+      `;
+
   })
   .catch(function (error) {
     console.log(error);
+      document.getElementById("registerErr").innerHTML = `
+	<br><br>
+	<div class="alert alert-danger" role="alert">
+	  Something went wrong on register
+	</div>
+	<br><br>
+      `;
   });
 }
 
@@ -38,5 +53,12 @@ function login() {
   })
   .catch(function (error) {
     console.log(error);
+      document.getElementById("loginErr").innerHTML = `
+	<br><br>
+	<div class="alert alert-danger" role="alert">
+	  Something went wrong on login
+	</div>
+	<br><br>
+      `;
   });
 }
