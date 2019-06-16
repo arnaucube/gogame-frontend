@@ -32,12 +32,13 @@ function getUser() {
     document.getElementById("deuterium").innerHTML = user.Resources.Deuterium;
     document.getElementById("energy").innerHTML = user.Resources.Energy;
 
-    if (localStorage.getItem("mainplanet") === null) {
+    // if (localStorage.getItem("mainplanet") === null) {
       localStorage.setItem("mainplanet", res.data.user.Planets[0]);
-    }
+    // }
   }).catch(function(error) {
     console.log(error);
   });
 }
+
 getUser();
 setInterval(getUser, 5000);

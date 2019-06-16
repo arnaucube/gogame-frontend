@@ -1,216 +1,443 @@
+function secondsToTime(secs)
+{
+    var h = Math.floor(secs / (60 * 60));
+
+    var divisor_for_minutes = secs % (60 * 60);
+    var m = Math.floor(divisor_for_minutes / 60);
+
+    var divisor_for_seconds = divisor_for_minutes % 60;
+    var s = Math.ceil(divisor_for_seconds);
+
+    return h + "h " + m + "m " + s + "s";
+}
+
 function printResources(r) {
+  let enough = true;
   let html = "";
   html += `Requires:`;
   if (r.Metal <= user.Resources.Metal) {
     html += ` Metal: <b style="color:lime;">` + r.Metal + `</b>`;
   } else {
+    enough = false;
     html += ` Metal: <b style="color:red;">` + r.Metal + `</b>`;
   }
 
   if (r.Crystal <= user.Resources.Crystal) {
     html += ` Crystal: <b style="color:lime;">` + r.Crystal + `</b>`;
   } else {
+    enough = false;
     html += ` Crystal: <b style="color:red;">` + r.Crystal + `</b>`;
   }
 
   if (r.Deuterium <= user.Resources.Deuterium) {
     html += ` Deuterium: <b style="color:lime;">` + r.Deuterium + `</b>`;
   } else {
+    enough = false;
     html += ` Deuterium: <b style="color:red;">` + r.Deuterium + `</b>`;
   }
 
   if (r.Energy <= user.Resources.Energy) {
     html += ` Energy: <b style="color: lime;">` + r.Energy + `</b>`;
   } else {
+    enough = false;
     html += ` Energy: <b style="color: red;">` + r.Energy + `</b>`;
   }
 
-  return html;
+  return {html, enough};
 }
 function printPlanet(planet) {
   let r = {};
   document.getElementById("planetname").innerHTML = planet.Name;
 
-  // metalmine
-  document.getElementById("metalmineLevel").innerHTML = "(Level " + planet.Buildings.metalmine + ")";
-  if (planet.Buildings.metalmine == undefined) {
-    document.getElementById("btnBuildMetalMine").innerHTML = `<div onclick="buildBuilding('metalmine')">Build building</div>`;
-    r = metalmineCost(1);
-    document.getElementById("metalmineResources").innerHTML = printResources(r);
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("currentBuild").innerHTML = `
+      Currently building: <b>` + planet.CurrentBuild.Title + `</b>
+      <br>
+      Finishes at: <b>` + planet.CurrentBuild.Ends + `</b>
+    `
   } else {
-    document.getElementById("btnBuildMetalMine").innerHTML = `<div onclick="buildBuilding('metalmine')">Build level ` + (+ (planet.Buildings.metalmine) + + (1)) + `</div>`;
+    document.getElementById("currentBuild").innerHTML = "";
+  }
+
+  // metalmine
+  if (planet.Buildings.metalmine == undefined) {
+    document.getElementById("btnBuildMetalMine").innerHTML = `<div style="color:lime;" onclick="buildBuilding('metalmine')">Build building</div>`;
+    r = metalmineCost(1);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("metalmineResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  } else {
+    document.getElementById("metalmineLevel").innerHTML = "(Level " + planet.Buildings.metalmine + ")";
+    document.getElementById("btnBuildMetalMine").innerHTML = `<div style="color:lime;" onclick="buildBuilding('metalmine')">Build level ` + (+ (planet.Buildings.metalmine) + + (1)) + `</div>`;
     r = metalmineCost((+ (planet.Buildings.metalmine) + + (1)));
-    document.getElementById("metalmineResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.metalmine) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("metalmineResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildMetalMine").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildMetalMine").innerHTML = `<span style="color: red;">building</span>`;
   }
 
   // crystalmine
-  document.getElementById("crystalmineLevel").innerHTML = "(Level " + planet.Buildings.crystalmine + ")";
   if (planet.Buildings.crystalmine == undefined) {
-    document.getElementById("btnBuildCrystalMine").innerHTML = `<div onclick="buildBuilding('crystalmine')">Build building</div>`;
+    document.getElementById("btnBuildCrystalMine").innerHTML = `<div style="color:lime;" onclick="buildBuilding('crystalmine')">Build building</div>`;
     r = crystalmineCost(1);
-    document.getElementById("crystalmineResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("crystalmineResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildCrystalMine").innerHTML = `<div onclick="buildBuilding('crystalmine')">Build level ` + (+ (planet.Buildings.crystalmine) + + (1)) + `</div>`;
+    document.getElementById("crystalmineLevel").innerHTML = "(Level " + planet.Buildings.crystalmine + ")";
+    document.getElementById("btnBuildCrystalMine").innerHTML = `<div style="color:lime;" onclick="buildBuilding('crystalmine')">Build level ` + (+ (planet.Buildings.crystalmine) + + (1)) + `</div>`;
     r = crystalmineCost((+ (planet.Buildings.crystalmine) + + (1)));
-    document.getElementById("crystalmineResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.crystalmine) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("crystalmineResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildCrystalMine").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildCrystalMine").innerHTML = `<span style="color: red;">building</span>`;
   }
 
-  // deuteriummine
-  document.getElementById("deuteriummineLevel").innerHTML = "(Level " + planet.Buildings.deuteriummine + ")";
+  // deuteriummine{
   if (planet.Buildings.deuteriummine == undefined) {
-    document.getElementById("btnBuildDeuteriumMine").innerHTML = `<div onclick="buildBuilding('deuteriummine')">Build building</div>`;
+    document.getElementById("btnBuildDeuteriumMine").innerHTML = `<div style="color:lime;" onclick="buildBuilding('deuteriummine')">Build building</div>`;
     r = deuteriummineCost(1);
-    document.getElementById("deuteriummineResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("deuteriummineResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildDeuteriumMine").innerHTML = `<div onclick="buildBuilding('deuteriummine')">Build level ` + (+ (planet.Buildings.deuteriummine) + + (1)) + `</div>`;
+    document.getElementById("deuteriummineLevel").innerHTML = "(Level " + planet.Buildings.deuteriummine + ")";
+    document.getElementById("btnBuildDeuteriumMine").innerHTML = `<div style="color:lime;" onclick="buildBuilding('deuteriummine')">Build level ` + (+ (planet.Buildings.deuteriummine) + + (1)) + `</div>`;
     r = deuteriummineCost((+ (planet.Buildings.deuteriummine) + + (1)));
-    document.getElementById("deuteriummineResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.deuteriummine) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("deuteriummineResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildDeuteriumMine").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildDeuteriumMine").innerHTML = `<span style="color: red;">building</span>`;
   }
 
   // energymine
-  document.getElementById("energymineLevel").innerHTML = "(Level " + planet.Buildings.energymine + ")";
   if (planet.Buildings.energymine == undefined) {
-    document.getElementById("btnBuildEnergyMine").innerHTML = `<div onclick="buildBuilding('energymine')">Build building</div>`;
+    document.getElementById("btnBuildEnergyMine").innerHTML = `<div style="color:lime;" onclick="buildBuilding('energymine')">Build building</div>`;
     r = energymineCost(1);
-    document.getElementById("energymineResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("energymineResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildEnergyMine").innerHTML = `<div onclick="buildBuilding('energymine')">Build level ` + (+ (planet.Buildings.energymine) + + (1)) + `</div>`;
+    document.getElementById("energymineLevel").innerHTML = "(Level " + planet.Buildings.energymine + ")";
+    document.getElementById("btnBuildEnergyMine").innerHTML = `<div style="color:lime;" onclick="buildBuilding('energymine')">Build level ` + (+ (planet.Buildings.energymine) + + (1)) + `</div>`;
     r = energymineCost((+ (planet.Buildings.energymine) + + (1)));
-    document.getElementById("energymineResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.energymine) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("energymineResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildEnergyMine").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildEnergyMine").innerHTML = `<span style="color: red;">building</span>`;
   }
 
   // fusionreactor
-  document.getElementById("fusionreactorLevel").innerHTML = "(Level " + planet.Buildings.fusionreactor + ")";
   if (planet.Buildings.fusionreactor == undefined) {
-    document.getElementById("btnBuildFusionReactor").innerHTML = `<div onclick="buildBuilding('fusionreactor')">Build building</div>`;
+    document.getElementById("btnBuildFusionReactor").innerHTML = `<div style="color:lime;" onclick="buildBuilding('fusionreactor')">Build building</div>`;
     r = fusionreactorCost(1);
-    document.getElementById("fusionreactorResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("fusionreactorResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildFusionReactor").innerHTML = `<div onclick="buildBuilding('fusionreactor')">Build level ` + (+ (planet.Buildings.fusionreactor) + + (1)) + `</div>`;
+    document.getElementById("fusionreactorLevel").innerHTML = "(Level " + planet.Buildings.fusionreactor + ")";
+    document.getElementById("btnBuildFusionReactor").innerHTML = `<div style="color:lime;" onclick="buildBuilding('fusionreactor')">Build level ` + (+ (planet.Buildings.fusionreactor) + + (1)) + `</div>`;
     r = fusionreactorCost((+ (planet.Buildings.fusionreactor) + + (1)));
-    document.getElementById("fusionreactorResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.fusionreactor) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("fusionreactorResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildFusionReactor").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildFusionReactor").innerHTML = `<span style="color: red;">building</span>`;
   }
 
   // roboticsfactory
-  document.getElementById("roboticsfactoryLevel").innerHTML = "(Level " + planet.Buildings.roboticsfactory + ")";
   if (planet.Buildings.roboticsfactory == undefined) {
-    document.getElementById("btnBuildRoboticsFactory").innerHTML = `<div onclick="buildBuilding('roboticsfactory')">Build building</div>`;
+    document.getElementById("btnBuildRoboticsFactory").innerHTML = `<div style="color:lime;" onclick="buildBuilding('roboticsfactory')">Build building</div>`;
     r = roboticsfactoryCost(1);
-    document.getElementById("roboticsfactoryResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("roboticsfactoryResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildRoboticsFactory").innerHTML = `<div onclick="buildBuilding('roboticsfactory')">Build level ` + (+ (planet.Buildings.roboticsfactory) + + (1)) + `</div>`;
+    document.getElementById("roboticsfactoryLevel").innerHTML = "(Level " + planet.Buildings.roboticsfactory + ")";
+    document.getElementById("btnBuildRoboticsFactory").innerHTML = `<div style="color:lime;" onclick="buildBuilding('roboticsfactory')">Build level ` + (+ (planet.Buildings.roboticsfactory) + + (1)) + `</div>`;
     r = roboticsfactoryCost((+ (planet.Buildings.roboticsfactory) + + (1)));
-    document.getElementById("roboticsfactoryResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("roboticsfactoryResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildRoboticsFactory").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildRoboticsFactory").innerHTML = `<span style="color: red;">building</span>`;
   }
 
   // shipyard
-  document.getElementById("shipyardLevel").innerHTML = "(Level " + planet.Buildings.shipyard + ")";
   if (planet.Buildings.shipyard == undefined) {
-    document.getElementById("btnBuildShipyard").innerHTML = `<div onclick="buildBuilding('shipyard')">Build building</div>`;
+    document.getElementById("btnBuildShipyard").innerHTML = `<div style="color:lime;" onclick="buildBuilding('shipyard')">Build building</div>`;
     r = shipyardCost(1);
-    document.getElementById("shipyardResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("shipyardResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildShipyard").innerHTML = `<div onclick="buildBuilding('shipyard')">Build level ` + (+ (planet.Buildings.shipyard) + + (1)) + `</div>`;
+    document.getElementById("shipyardLevel").innerHTML = "(Level " + planet.Buildings.shipyard + ")";
+    document.getElementById("btnBuildShipyard").innerHTML = `<div style="color:lime;" onclick="buildBuilding('shipyard')">Build level ` + (+ (planet.Buildings.shipyard) + + (1)) + `</div>`;
     r = shipyardCost((+ (planet.Buildings.shipyard) + + (1)));
-    document.getElementById("shipyardResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.shipyard) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("shipyardResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildShipyard").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildShipyard").innerHTML = `<span style="color: red;">building</span>`;
   }
 
   // metalstorage
-  document.getElementById("metalstorageLevel").innerHTML = "(Level " + planet.Buildings.metalstorage + ")";
   if (planet.Buildings.metalstorage == undefined) {
-    document.getElementById("btnBuildMetalStorage").innerHTML = `<div onclick="buildBuilding('metalstorage')">Build building</div>`;
+    document.getElementById("btnBuildMetalStorage").innerHTML = `<div style="color:lime;" onclick="buildBuilding('metalstorage')">Build building</div>`;
     r = metalstorageCost(1);
-    document.getElementById("metalstorageResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("metalstorageResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildMetalStorage").innerHTML = `<div onclick="buildBuilding('metalstorage')">Build level ` + (+ (planet.Buildings.metalstorage) + + (1)) + `</div>`;
+    document.getElementById("metalstorageLevel").innerHTML = "(Level " + planet.Buildings.metalstorage + ")";
+    document.getElementById("btnBuildMetalStorage").innerHTML = `<div style="color:lime;" onclick="buildBuilding('metalstorage')">Build level ` + (+ (planet.Buildings.metalstorage) + + (1)) + `</div>`;
     r = metalstorageCost((+ (planet.Buildings.metalstorage) + + (1)));
-    document.getElementById("metalstorageResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.metalstorage) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("metalstorageResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildMetalStorage").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildMetalStorage").innerHTML = `<span style="color: red;">building</span>`;
   }
 
   // crystalstorage
-  document.getElementById("crystalstorageLevel").innerHTML = "(Level " + planet.Buildings.crystalstorage + ")";
   if (planet.Buildings.crystalstorage == undefined) {
-    document.getElementById("btnBuildCrystalStorage").innerHTML = `<div onclick="buildBuilding('crystalstorage')">Build building</div>`;
+    document.getElementById("btnBuildCrystalStorage").innerHTML = `<div style="color:lime;" onclick="buildBuilding('crystalstorage')">Build building</div>`;
     r = crystalstorageCost(1);
-    document.getElementById("crystalstorageResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("crystalstorageResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildCrystalStorage").innerHTML = `<div onclick="buildBuilding('crystalstorage')">Build level ` + (+ (planet.Buildings.crystalstorage) + + (1)) + `</div>`;
+    document.getElementById("crystalstorageLevel").innerHTML = "(Level " + planet.Buildings.crystalstorage + ")";
+    document.getElementById("btnBuildCrystalStorage").innerHTML = `<div style="color:lime;" onclick="buildBuilding('crystalstorage')">Build level ` + (+ (planet.Buildings.crystalstorage) + + (1)) + `</div>`;
     r = crystalstorageCost((+ (planet.Buildings.crystalstorage) + + (1)));
-    document.getElementById("crystalstorageResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.crystalstorage) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("crystalstorageResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildCrystalStorage").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildCrystalStorage").innerHTML = `<span style="color: red;">building</span>`;
   }
 
   // deuteriumstorage
-  document.getElementById("deuteriumstorageLevel").innerHTML = "(Level " + planet.Buildings.deuteriumstorage + ")";
   if (planet.Buildings.deuteriumstorage == undefined) {
-    document.getElementById("btnBuildDeuteriumStorage").innerHTML = `<div onclick="buildBuilding('deuteriumstorage')">Build building</div>`;
+    document.getElementById("btnBuildDeuteriumStorage").innerHTML = `<div style="color:lime;" onclick="buildBuilding('deuteriumstorage')">Build building</div>`;
     r = deuteriumstorageCost(1);
-    document.getElementById("deuteriumstorageResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("deuteriumstorageResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildDeuteriumStorage").innerHTML = `<div onclick="buildBuilding('deuteriumstorage')">Build level ` + (+ (planet.Buildings.deuteriumstorage) + + (1)) + `</div>`;
+    document.getElementById("deuteriumstorageLevel").innerHTML = "(Level " + planet.Buildings.deuteriumstorage + ")";
+    document.getElementById("btnBuildDeuteriumStorage").innerHTML = `<div style="color:lime;" onclick="buildBuilding('deuteriumstorage')">Build level ` + (+ (planet.Buildings.deuteriumstorage) + + (1)) + `</div>`;
     r = deuteriumstorageCost((+ (planet.Buildings.deuteriumstorage) + + (1)));
-    document.getElementById("deuteriumstorageResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.deuteriumstorage) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("deuteriumstorageResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildDeuteriumStorage").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildDeuteriumStorage").innerHTML = `<span style="color: red;">building</span>`;
   }
 
   // ressearchlab
-  document.getElementById("ressearchlabLevel").innerHTML = "(Level " + planet.Buildings.ressearchlab + ")";
   if (planet.Buildings.ressearchlab == undefined) {
-    document.getElementById("btnBuildRessearchLab").innerHTML = `<div onclick="buildBuilding('ressearchlab')">Build building</div>`;
+    document.getElementById("btnBuildRessearchLab").innerHTML = `<div style="color:lime;" onclick="buildBuilding('ressearchlab')">Build building</div>`;
     r = ressearchlabCost(1);
-    document.getElementById("ressearchlabResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("ressearchlabResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildRessearchLab").innerHTML = `<div onclick="buildBuilding('ressearchlab')">Build level ` + (+ (planet.Buildings.ressearchlab) + + (1)) + `</div>`;
+    document.getElementById("ressearchlabLevel").innerHTML = "(Level " + planet.Buildings.ressearchlab + ")";
+    document.getElementById("btnBuildRessearchLab").innerHTML = `<div style="color:lime;" onclick="buildBuilding('ressearchlab')">Build level ` + (+ (planet.Buildings.ressearchlab) + + (1)) + `</div>`;
     r = ressearchlabCost((+ (planet.Buildings.ressearchlab) + + (1)));
-    document.getElementById("ressearchlabResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.ressearchlab) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("ressearchlabResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildRessearchLab").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildRessearchLab").innerHTML = `<span style="color: red;">building</span>`;
   }
 
   // alliancedepot
-  document.getElementById("alliancedepotLevel").innerHTML = "(Level " + planet.Buildings.alliancedepot + ")";
   if (planet.Buildings.alliancedepot == undefined) {
-    document.getElementById("btnBuildAllianceDepot").innerHTML = `<div onclick="buildBuilding('alliancedepot')">Build building</div>`;
+    document.getElementById("btnBuildAllianceDepot").innerHTML = `<div style="color:lime;" onclick="buildBuilding('alliancedepot')">Build building</div>`;
     r = alliancedepotCost(1);
-    document.getElementById("alliancedepotResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("alliancedepotResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildAllianceDepot").innerHTML = `<div onclick="buildBuilding('alliancedepot')">Build level ` + (+ (planet.Buildings.alliancedepot) + + (1)) + `</div>`;
+    document.getElementById("alliancedepotLevel").innerHTML = "(Level " + planet.Buildings.alliancedepot + ")";
+    document.getElementById("btnBuildAllianceDepot").innerHTML = `<div style="color:lime;" onclick="buildBuilding('alliancedepot')">Build level ` + (+ (planet.Buildings.alliancedepot) + + (1)) + `</div>`;
     r = alliancedepotCost((+ (planet.Buildings.alliancedepot) + + (1)));
-    document.getElementById("alliancedepotResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.alliancedepot) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("alliancedepotResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildAllianceDepot").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildAllianceDepot").innerHTML = `<span style="color: red;">building</span>`;
   }
 
   // missilesilo
-  document.getElementById("missilesiloLevel").innerHTML = "(Level " + planet.Buildings.missilesilo + ")";
   if (planet.Buildings.missilesilo == undefined) {
-    document.getElementById("btnBuildMissileSilo").innerHTML = `<div onclick="buildBuilding('missilesilo')">Build building</div>`;
+    document.getElementById("btnBuildMissileSilo").innerHTML = `<div style="color:lime;" onclick="buildBuilding('missilesilo')">Build building</div>`;
     r = missilesiloCost(1);
-    document.getElementById("missilesiloResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("missilesiloResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildMissileSilo").innerHTML = `<div onclick="buildBuilding('missilesilo')">Build level ` + (+ (planet.Buildings.missilesilo) + + (1)) + `</div>`;
+    document.getElementById("missilesiloLevel").innerHTML = "(Level " + planet.Buildings.missilesilo + ")";
+    document.getElementById("btnBuildMissileSilo").innerHTML = `<div style="color:lime;" onclick="buildBuilding('missilesilo')">Build level ` + (+ (planet.Buildings.missilesilo) + + (1)) + `</div>`;
     r = missilesiloCost((+ (planet.Buildings.missilesilo) + + (1)));
-    document.getElementById("missilesiloResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.missilesilo) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("missilesiloResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildMissileSilo").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildMissileSilo").innerHTML = `<span style="color: red;">building</span>`;
   }
 
   // spacedock
-  document.getElementById("spacedockLevel").innerHTML = "(Level " + planet.Buildings.spacedock + ")";
   if (planet.Buildings.spacedock == undefined) {
-    document.getElementById("btnBuildSpacedock").innerHTML = `<div onclick="buildBuilding('spacedock')">Build building</div>`;
+    document.getElementById("btnBuildSpacedock").innerHTML = `<div style="color:lime;" onclick="buildBuilding('spacedock')">Build building</div>`;
     r = spacedockCost(1);
-    document.getElementById("spacedockResources").innerHTML = printResources(r);
+    t = constructionTime(r, 1);
+    resrourcesHtml = printResources(r);
+    document.getElementById("spacedockResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
   } else {
-    document.getElementById("btnBuildSpacedock").innerHTML = `<div onclick="buildBuilding('spacedock')">Build level ` + (+ (planet.Buildings.spacedock) + + (1)) + `</div>`;
+    document.getElementById("spacedockLevel").innerHTML = "(Level " + planet.Buildings.spacedock + ")";
+    document.getElementById("btnBuildSpacedock").innerHTML = `<div style="color:lime;" onclick="buildBuilding('spacedock')">Build level ` + (+ (planet.Buildings.spacedock) + + (1)) + `</div>`;
     r = spacedockCost((+ (planet.Buildings.spacedock) + + (1)));
-    document.getElementById("spacedockResources").innerHTML = printResources(r);
+    t = constructionTime(r, (+ (planet.Buildings.spacedock) + + (1)));
+    resrourcesHtml = printResources(r);
+    document.getElementById("spacedockResources").innerHTML = resrourcesHtml.html + `
+      <br>
+      Construction time: ` + secondsToTime(t);
+  }
+  if (!resrourcesHtml.enough) {
+    document.getElementById("btnBuildSpacedock").innerHTML = `<span style="color: red;">not enough resources</span>`;
+  }
+  if (planet.CurrentBuild.Title !== "") {
+    document.getElementById("btnBuildSpacedock").innerHTML = `<span style="color: red;">building</span>`;
   }
 }
 
 let planetid = localStorage.getItem("mainplanet");
 let planet = {};
 // get user data
-axios.get(url + "/planets/" + planetid, config).then(function(res) {
-  console.log("buildings", res.data);
-  planet = res.data.planet;
-  printPlanet(planet);
-}).catch(function(error) {
-  console.log(error);
-});
-
+function getPlanet() {
+  axios.get(url + "/planets/" + planetid, config).then(function(res) {
+    console.log("buildings", res.data);
+    planet = res.data.planet;
+    printPlanet(planet);
+  }).catch(function(error) {
+    console.log(error);
+  });
+}
+getPlanet();
+setInterval(getPlanet, 5000);
 
 function buildBuilding(building) {
   console.log("build " + building);

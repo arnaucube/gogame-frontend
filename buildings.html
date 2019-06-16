@@ -63,6 +63,9 @@
         User Name: <span id="name"></span>
         <br>
         Planet Name: <span id="planetname"></span>
+        <br><br>
+        <div id="currentBuild"></div>
+        <br>
 
         <table>
           <tbody>
@@ -77,10 +80,9 @@
                 <img src="images/buildings/metalmine.png" width="120" height="120" border="0" align="top">
               </td>
               <td>
-                <a href="#">Metal Mine</a> <span id="metalmineLevel">(Level 0)</span><br>
+                <a href="#">Metal Mine</a> <span id="metalmineLevel"></span><br>
                 Used in the extraction of metal ore, metal mines are of primary importance to all emerging and established empires.<br>
                 <div id="metalmineResources"></div>
-                Construction Time: 00h 00m 00s
                 <br>
               </td>
               <td>
@@ -96,7 +98,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=2">Crystal Mine</a> <span id="crystalmineLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=2">Crystal Mine</a> <span id="crystalmineLevel"></span><br>
                 Crystals are the main resource used to build electronic circuits and form certain alloy compounds.<br>
                 <div id="crystalmineResources"></div>
                 <br>
@@ -114,7 +116,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=3">Deuterium Synthesizer</a> <span id="deuteriummineLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=3">Deuterium Synthesizer</a> <span id="deuteriummineLevel"></span><br>
                 Deuterium is used as fuel for spaceships and is harvested in the deep sea. Deuterium is a rare substance and is thus relatively expensive.<br>
                 <div id="deuteriummineResources"></div>
                 <br>
@@ -132,7 +134,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=4">Solar Plant</a> <span id="energymineLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=4">Solar Plant</a> <span id="energymineLevel"></span><br>
                 Solar power plants absorb energy from solar radiation. All mines need energy to operate.<br>
                 <div id="energymineResources"></div>
                 <br>
@@ -150,7 +152,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=12">Fusion Reactor</a> <span id="fusionreactorLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=12">Fusion Reactor</a> <span id="fusionreactorLevel"></span><br>
                 The fusion reactor uses deuterium to produce energy.<br>
                 <div id="fusionreactorResources"></div>
                 <br>
@@ -168,7 +170,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=14">Robotics Factory</a> <span id="roboticsfactoryLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=14">Robotics Factory</a> <span id="roboticsfactoryLevel"></span><br>
                 Robotic factories provide construction robots to aid in the construction of buildings. Each level increases the speed of the upgrade of buildings.<br>
                 <div id="roboticsfactoryResources"></div>
                 <br>
@@ -186,7 +188,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=21">Shipyard</a> <span id="shipyardLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=21">Shipyard</a> <span id="shipyardLevel"></span><br>
                 All types of ships and defensive facilities are built in the planetary shipyard.<br>
                 <div id="shipyardResources"></div>
                 <br>
@@ -204,7 +206,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=22">Metal Storage</a> <span id="metalstorageLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=22">Metal Storage</a> <span id="metalstorageLevel"></span><br>
                 Provides storage for excess metal.<br>
                 <div id="metalstorageResources"></div>
                 <br>
@@ -222,7 +224,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=23">Crystal Storage</a> <span id="crystalstorageLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=23">Crystal Storage</a> <span id="crystalstorageLevel"></span><br>
                 Provides storage for excess crystal.<br>
                 <div id="crystalstorageResources"></div>
                 <br>
@@ -240,7 +242,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=24">Deuterium Tank</a> <span id="deuteriumstorageLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=24">Deuterium Tank</a> <span id="deuteriumstorageLevel"></span><br>
                 Giant tanks for storing newly-extracted deuterium.<br>
                 <div id="deuteriumstorageResources"></div>
                 <br>
@@ -258,7 +260,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=31">Research Lab</a> <span id="ressearchlabLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=31">Research Lab</a> <span id="ressearchlabLevel"></span><br>
                 A research lab is required in order to conduct research into new technologies.<br>
                 <div id="ressearchlabResources"></div>
                 <br>
@@ -276,7 +278,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=34">Alliance Depot</a> <span id="alliancedepotLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=34">Alliance Depot</a> <span id="alliancedepotLevel"></span><br>
                 The alliance depot supplies fuel to friendly fleets in orbit helping with defense.<br>
                 <div id="alliancedepotResources"></div>
                 <br>
@@ -294,7 +296,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=44">Missile Silo</a> <span id="missilesiloLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=44">Missile Silo</a> <span id="missilesiloLevel"></span><br>
                 Perfect to store missiles<br>
                 <div id="missilesiloResources"></div>
                 <br>
@@ -312,7 +314,7 @@
                 </a>
               </td>
               <td>
-                <a href="infos.php?gid=80">Spacedock</a> <span id="spacedockLevel">(Level 0)</span><br>
+                <a href="infos.php?gid=80">Spacedock</a> <span id="spacedockLevel"></span><br>
                 The space dock offers the possibility to repair destroyed ships that have left a wreckage field as a result of a battle. The maximum repair time is 12 hours, but it takes at least 30 minutes until the ships can be put into service.
                 <br>From
                 the formation of the wreck field there are 3 days time to start the repair. The repaired ships must be actively put back into service after the repair has expired. If this does not happen, they automatically return to service after 3
