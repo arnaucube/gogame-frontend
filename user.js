@@ -27,14 +27,30 @@ function getUser() {
     console.log(user);
     document.getElementById("name").innerHTML = user.Name;
 
-    document.getElementById("metal").innerHTML = user.Resources.Metal;
-    document.getElementById("crystal").innerHTML = user.Resources.Crystal;
-    document.getElementById("deuterium").innerHTML = user.Resources.Deuterium;
-    document.getElementById("energy").innerHTML = user.Resources.Energy;
 
     // if (localStorage.getItem("mainplanet") === null) {
       localStorage.setItem("mainplanet", res.data.user.Planets[0]);
     // }
+    getPlanet();
+  }).catch(function(error) {
+    console.log(error);
+  });
+}
+
+
+let planetid = localStorage.getItem("mainplanet");
+let planet = {};
+// get user data
+function getPlanet() {
+  axios.get(url + "/planets/" + planetid, config).then(function(res) {
+    console.log("planet", res.data);
+    planet = res.data.planet;
+    console.log("planet", planet);
+    printResources(planet.Resources);
+    if (window.location.href.includes("buildings.html")) {
+      printBuildings(planet);
+    }
+
   }).catch(function(error) {
     console.log(error);
   });
