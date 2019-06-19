@@ -1,14 +1,13 @@
-function secondsToTime(secs)
-{
-    var h = Math.floor(secs / (60 * 60));
+function secondsToTime(secs) {
+  var h = Math.floor(secs / (60 * 60));
 
-    var divisor_for_minutes = secs % (60 * 60);
-    var m = Math.floor(divisor_for_minutes / 60);
+  var divisor_for_minutes = secs % (60 * 60);
+  var m = Math.floor(divisor_for_minutes / 60);
 
-    var divisor_for_seconds = divisor_for_minutes % 60;
-    var s = Math.ceil(divisor_for_seconds);
+  var divisor_for_seconds = divisor_for_minutes % 60;
+  var s = Math.ceil(divisor_for_seconds);
 
-    return h + "h " + m + "m " + s + "s";
+  return h + "h " + m + "m " + s + "s";
 }
 
 function printNeededResources(r) {
@@ -54,6 +53,21 @@ function printResources(r) {
   document.getElementById("energy").innerHTML = r.Energy;
 }
 
+function coundown(t) {
+  document.getElementById("countdown").innerHTML = `
+    Countdown: <b>` + secondsToTime(t) + `</b>`;
+  let timer = setInterval(function() {
+    if (t > 0) {
+      t--;
+      document.getElementById("countdown").innerHTML = `
+      Countdown: <b>` + secondsToTime(t) + `</b>`;
+    } else {
+      clearInterval(timer);
+      getUser();
+    }
+  }, 1000);
+}
+
 function printBuildings(planet) {
   let r = {};
   let resrourcesHtml = {};
@@ -65,8 +79,10 @@ function printBuildings(planet) {
       <br>
       Finishes at: <b>` + planet.CurrentBuild.Ends + `</b>
     `
+    coundown(planet.CurrentBuild.CountDown);
   } else {
     document.getElementById("currentBuild").innerHTML = "";
+    document.getElementById("countdown").innerHTML = "";
   }
 
   // metalmine
@@ -82,7 +98,7 @@ function printBuildings(planet) {
     document.getElementById("metalmineLevel").innerHTML = "(Level " + planet.Buildings.metalmine + ")";
     document.getElementById("btnBuildMetalMine").innerHTML = `<div class="allowed" onclick="buildBuilding('metalmine')">Build level ` + (+ (planet.Buildings.metalmine) + + (1)) + `</div>`;
     r = metalmineCost((+ (planet.Buildings.metalmine) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.metalmine) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("metalmineResources").innerHTML = resrourcesHtml.html + `
       <br>
@@ -108,7 +124,7 @@ function printBuildings(planet) {
     document.getElementById("crystalmineLevel").innerHTML = "(Level " + planet.Buildings.crystalmine + ")";
     document.getElementById("btnBuildCrystalMine").innerHTML = `<div class="allowed" onclick="buildBuilding('crystalmine')">Build level ` + (+ (planet.Buildings.crystalmine) + + (1)) + `</div>`;
     r = crystalmineCost((+ (planet.Buildings.crystalmine) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.crystalmine) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("crystalmineResources").innerHTML = resrourcesHtml.html + `
       <br>
@@ -134,7 +150,7 @@ function printBuildings(planet) {
     document.getElementById("deuteriummineLevel").innerHTML = "(Level " + planet.Buildings.deuteriummine + ")";
     document.getElementById("btnBuildDeuteriumMine").innerHTML = `<div class="allowed" onclick="buildBuilding('deuteriummine')">Build level ` + (+ (planet.Buildings.deuteriummine) + + (1)) + `</div>`;
     r = deuteriummineCost((+ (planet.Buildings.deuteriummine) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.deuteriummine) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("deuteriummineResources").innerHTML = resrourcesHtml.html + `
       <br>
@@ -160,7 +176,7 @@ function printBuildings(planet) {
     document.getElementById("energymineLevel").innerHTML = "(Level " + planet.Buildings.energymine + ")";
     document.getElementById("btnBuildEnergyMine").innerHTML = `<div class="allowed" onclick="buildBuilding('energymine')">Build level ` + (+ (planet.Buildings.energymine) + + (1)) + `</div>`;
     r = energymineCost((+ (planet.Buildings.energymine) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.energymine) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("energymineResources").innerHTML = resrourcesHtml.html + `
       <br>
@@ -186,7 +202,7 @@ function printBuildings(planet) {
     document.getElementById("fusionreactorLevel").innerHTML = "(Level " + planet.Buildings.fusionreactor + ")";
     document.getElementById("btnBuildFusionReactor").innerHTML = `<div class="allowed" onclick="buildBuilding('fusionreactor')">Build level ` + (+ (planet.Buildings.fusionreactor) + + (1)) + `</div>`;
     r = fusionreactorCost((+ (planet.Buildings.fusionreactor) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.fusionreactor) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("fusionreactorResources").innerHTML = resrourcesHtml.html + `
       <br>
@@ -238,7 +254,7 @@ function printBuildings(planet) {
     document.getElementById("shipyardLevel").innerHTML = "(Level " + planet.Buildings.shipyard + ")";
     document.getElementById("btnBuildShipyard").innerHTML = `<div class="allowed" onclick="buildBuilding('shipyard')">Build level ` + (+ (planet.Buildings.shipyard) + + (1)) + `</div>`;
     r = shipyardCost((+ (planet.Buildings.shipyard) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.shipyard) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("shipyardResources").innerHTML = resrourcesHtml.html + `
       <br>
@@ -264,7 +280,7 @@ function printBuildings(planet) {
     document.getElementById("metalstorageLevel").innerHTML = "(Level " + planet.Buildings.metalstorage + ")";
     document.getElementById("btnBuildMetalStorage").innerHTML = `<div class="allowed" onclick="buildBuilding('metalstorage')">Build level ` + (+ (planet.Buildings.metalstorage) + + (1)) + `</div>`;
     r = metalstorageCost((+ (planet.Buildings.metalstorage) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.metalstorage) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("metalstorageResources").innerHTML = resrourcesHtml.html + `
       <br>
@@ -290,7 +306,7 @@ function printBuildings(planet) {
     document.getElementById("crystalstorageLevel").innerHTML = "(Level " + planet.Buildings.crystalstorage + ")";
     document.getElementById("btnBuildCrystalStorage").innerHTML = `<div class="allowed" onclick="buildBuilding('crystalstorage')">Build level ` + (+ (planet.Buildings.crystalstorage) + + (1)) + `</div>`;
     r = crystalstorageCost((+ (planet.Buildings.crystalstorage) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.crystalstorage) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("crystalstorageResources").innerHTML = resrourcesHtml.html + `
       <br>
@@ -316,7 +332,7 @@ function printBuildings(planet) {
     document.getElementById("deuteriumstorageLevel").innerHTML = "(Level " + planet.Buildings.deuteriumstorage + ")";
     document.getElementById("btnBuildDeuteriumStorage").innerHTML = `<div class="allowed" onclick="buildBuilding('deuteriumstorage')">Build level ` + (+ (planet.Buildings.deuteriumstorage) + + (1)) + `</div>`;
     r = deuteriumstorageCost((+ (planet.Buildings.deuteriumstorage) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.deuteriumstorage) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("deuteriumstorageResources").innerHTML = resrourcesHtml.html + `
       <br>
@@ -342,7 +358,7 @@ function printBuildings(planet) {
     document.getElementById("ressearchlabLevel").innerHTML = "(Level " + planet.Buildings.ressearchlab + ")";
     document.getElementById("btnBuildRessearchLab").innerHTML = `<div class="allowed" onclick="buildBuilding('ressearchlab')">Build level ` + (+ (planet.Buildings.ressearchlab) + + (1)) + `</div>`;
     r = ressearchlabCost((+ (planet.Buildings.ressearchlab) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.ressearchlab) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("ressearchlabResources").innerHTML = resrourcesHtml.html + `
       <br>
@@ -368,7 +384,7 @@ function printBuildings(planet) {
     document.getElementById("alliancedepotLevel").innerHTML = "(Level " + planet.Buildings.alliancedepot + ")";
     document.getElementById("btnBuildAllianceDepot").innerHTML = `<div class="allowed" onclick="buildBuilding('alliancedepot')">Build level ` + (+ (planet.Buildings.alliancedepot) + + (1)) + `</div>`;
     r = alliancedepotCost((+ (planet.Buildings.alliancedepot) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.alliancedepot) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("alliancedepotResources").innerHTML = resrourcesHtml.html + `
       <br>
@@ -394,7 +410,7 @@ function printBuildings(planet) {
     document.getElementById("missilesiloLevel").innerHTML = "(Level " + planet.Buildings.missilesilo + ")";
     document.getElementById("btnBuildMissileSilo").innerHTML = `<div class="allowed" onclick="buildBuilding('missilesilo')">Build level ` + (+ (planet.Buildings.missilesilo) + + (1)) + `</div>`;
     r = missilesiloCost((+ (planet.Buildings.missilesilo) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.missilesilo) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("missilesiloResources").innerHTML = resrourcesHtml.html + `
       <br>
@@ -420,7 +436,7 @@ function printBuildings(planet) {
     document.getElementById("spacedockLevel").innerHTML = "(Level " + planet.Buildings.spacedock + ")";
     document.getElementById("btnBuildSpacedock").innerHTML = `<div class="allowed" onclick="buildBuilding('spacedock')">Build level ` + (+ (planet.Buildings.spacedock) + + (1)) + `</div>`;
     r = spacedockCost((+ (planet.Buildings.spacedock) + + (1)));
-    t = constructionTime(r, (+ (planet.Buildings.spacedock) + + (1)));
+    t = constructionTime(r, (+ (planet.Buildings.roboticsfactory) + + (1)));
     resrourcesHtml = printNeededResources(r);
     document.getElementById("spacedockResources").innerHTML = resrourcesHtml.html + `
       <br>

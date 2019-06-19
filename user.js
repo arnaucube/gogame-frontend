@@ -26,6 +26,7 @@ function getUser() {
     user = res.data.user;
     console.log(user);
     document.getElementById("name").innerHTML = user.Name;
+    document.getElementById("points").innerHTML = Math.floor(user.Points/1000);
 
 
     // if (localStorage.getItem("mainplanet") === null) {
@@ -42,6 +43,7 @@ let planetid = localStorage.getItem("mainplanet");
 let planet = {};
 // get user data
 function getPlanet() {
+  planetid = localStorage.getItem("mainplanet");
   axios.get(url + "/planets/" + planetid, config).then(function(res) {
     console.log("planet", res.data);
     planet = res.data.planet;
@@ -57,4 +59,4 @@ function getPlanet() {
 }
 
 getUser();
-setInterval(getUser, 5000);
+setInterval(getUser, 10000);

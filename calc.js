@@ -1,4 +1,4 @@
-const universespeed = 1;
+const universespeed = 5;
 
 function metalmineCost(lvl) {
   const base = {
@@ -214,6 +214,9 @@ function spacedockCost(lvl) {
 
 function constructionTime(r, roboticsLvl) {
   const naniteLvl = 1;
+  if(isNaN(roboticsLvl)) {
+    roboticsLvl=0;
+  }
   // T(h) = (metal + crystal) / (2500 * (1+roboticsLvl) * 2^naniteLvl * universespeed)
   tHours = (r.Metal + r.Crystal) / (2500 * (1 + roboticsLvl) * 2**naniteLvl * universespeed);
   return Math.floor(tHours * 3600);
