@@ -12,6 +12,7 @@ function secondsToTime(secs) {
 
 function printNeededResources(r) {
   let enough = true;
+  let enoughEnergy = true;
   let html = "";
   html += `Requires:`;
   if (r.Metal <= planet.Resources.Metal) {
@@ -39,10 +40,11 @@ function printNeededResources(r) {
     html += ` Energy: <b style="color: lime;">` + r.Energy + `</b>`;
   } else {
     enough = false;
+    enoughEnergy = true;
     html += ` Energy: <b style="color: red;">` + r.Energy + `</b>`;
   }
 
-  return {html, enough};
+  return {html, enough, enoughEnergy};
 }
 
 function printResources(r) {
@@ -182,7 +184,7 @@ function printBuildings(planet) {
       <br>
       Construction time: ` + secondsToTime(t);
   }
-  if (!resrourcesHtml.enough) {
+  if (!resrourcesHtml.enoughEnergy) {
     document.getElementById("btnBuildEnergyMine").innerHTML = `<span style="color: red;">not enough resources</span>`;
   }
   if (planet.CurrentBuild.Title !== "") {
@@ -459,7 +461,7 @@ function buildBuilding(building) {
   axios.post(url + "/buildings", data, config).then(function(res) {
     console.log("buildings", res.data);
     planet = res.data.planet;
-    printResources(planet.Resources);
+    // printResources(planet.Resources);
     printBuildings(planet);
   }).catch(function(error) {
     console.log(error);
